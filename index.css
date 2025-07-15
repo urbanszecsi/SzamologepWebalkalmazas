@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+:root {
+    --soft-gray: rgba(240, 240, 240, 0.4);
+    --operator: rgba(254, 149, 5, 1);
+    --operator-2: rgba(255, 170, 150, 1);
+    --number: rgba(51, 51, 51, 1);
+    --number-2: rgba(101, 101, 101, 1);
+}
+
+
+body{
+    margin: 10;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: dimgrey;
+}
+
+#container{
+    display: block;
+    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    margin: auto;
+    background-color: black;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 14px 18px rgba(0, 0, 0, 0.8);
+}
+#title{
+    font-size: 32px;
+    color: var(--soft-gray);
+    height: 60px;
+    text-align: center;
+}
+
+#display{
+    display: flex;
+    justify-content:right;
+    align-items:end;
+    padding: 10px;
+    height: 120px;
+    margin-bottom: 10px;
+    border-style: solid;
+    border-color: var(--soft-gray);
+    border-radius: 20px;
+    color: rgba(250,250,250, 0.9);
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+
+#btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+    margin-bottom: 10px;
+  }
+  
+.btn {
+    flex: 0 0 calc(25% - 10px); 
+    box-sizing: border-box;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ccc;
+    font-size: 28px;
+    border: 1px solid #999;
+    height: 90px;
+    border-radius: 45px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    cursor: pointer;
+
+}
+
+.btn-operator{
+    background-color: var(--operator);
+}
+
+.btn-operator:hover{
+    background-color: var(--operator-2);
+}
+
+.btn-equals{
+    background-color: var(--operator);
+}
+
+.btn-equals:hover{
+    background-color: var(--operator-2);
+}
+
+.btn-number:hover{
+    background-color: var(--number-2);
+}
+
+
+.btn-decimal:hover{
+    background-color: var(--number-2);
+}
+
+.btn-clear:hover{
+    background-color: var(--number-2);
+}
+
+.btn:active {
+    background-color: #aaaaff;
+    transform: scale(0.90);
+}

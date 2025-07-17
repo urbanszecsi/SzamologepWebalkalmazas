@@ -1,3 +1,7 @@
 #frontend
 /frontend/dist/
 /frontend/node_modules/
+
+#backend
+backend/.idea/
+backend/venv/

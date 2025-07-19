@@ -34,7 +34,9 @@ pipeline {
 		
         stage('Build frontend') {
             steps {
-                powershell 'npm run build'
+				dir('frontend') {
+					powershell 'npm run build'
+				}
             }
         }
     }

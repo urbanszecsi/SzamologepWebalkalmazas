@@ -39,6 +39,14 @@ pipeline {
 				}
             }
         }
+		stage('JS tests') {
+			steps {
+				dir('frontend') {
+					powershell 'npm test --silent'
+				}
+			}
+		}
+		
     }
 
     options { timeout(time: 15, unit: 'MINUTES') }

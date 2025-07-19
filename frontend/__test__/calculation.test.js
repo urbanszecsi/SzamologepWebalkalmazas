@@ -1,4 +1,4 @@
-import { add, subtract, multiply, divide } from './calculator.js';
+import { add, subtract, multiply, divide } from './calculation.js';
 
 describe('calculator core functions', () => {
   test('add – két pozitív', () => {

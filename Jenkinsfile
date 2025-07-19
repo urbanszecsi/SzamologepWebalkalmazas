@@ -12,15 +12,25 @@ pipeline {
             steps { checkout scm }   // a job configban megadott repo + branch
         }
 
-        stage('Install deps') {
-            steps {
-                bat '''
-                    %PYTHON% -m pip install --upgrade pip
-                    if exist requirements.txt %PYTHON% -m pip install -r requirements.txt
-                    npm ci
-                '''
-            }
-        }
+        stage('Python deps') {
+    steps {
+        bat '%PYTHON% -m pip install -r requirements.txt --disable-pip-version-check -q'
+			bat '''
+				if exist requirements.txt (
+					%PYTHON% -m pip install -r requirements.txt -q
+				) else (
+					echo No requirements.txt found
+				)
+			'''
+		}
+	}
+
+	stage('JS deps') {
+		steps {
+			// --loglevel=info folyamatosan írja a modulokat
+			bat 'npm ci --loglevel=info --no-audit --no-fund'
+		}
+	}
 
         stage('Build frontend') {
             steps {

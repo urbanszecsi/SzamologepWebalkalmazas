@@ -6,12 +6,10 @@ pipeline {
 
     stages {
         stage('Prep') {
-            steps {
-                bat 'where node'
-                bat 'node -v'
-                bat '%PYTHON% --version'
-            }
-        }
+			steps {
+				bat 'echo PREP STEP OK'
+			}
+		}
 
         stage('npm install') {
             steps {

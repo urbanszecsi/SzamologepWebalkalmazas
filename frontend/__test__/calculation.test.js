@@ -1,4 +1,4 @@
-import { add, subtract, multiply, divide } from './calculation.js';
+import { add, subtract, multiply, divide } from '../calculation.js';
 
 describe('calculator core functions', () => {
   test('add – két pozitív', () => {
@@ -16,6 +16,11 @@ describe('calculator core functions', () => {
 
   test('divide – normál és nullával osztás', () => {
     expect(divide(10, 2)).toBe(5);
-    expect(divide(10, 0)).toBeNaN();     
+  });
+
+  test('nullával osztás hibát dob', () => {
+    const fn = () => divide(4, 0);
+
+    expect(fn).toThrow('Cannot divide by zero.');
   });
 });

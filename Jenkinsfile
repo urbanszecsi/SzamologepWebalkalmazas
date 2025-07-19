@@ -14,7 +14,11 @@ pipeline {
 
         stage('Python deps') {
     steps {
+<<<<<<< HEAD
         bat '%PYTHON% -m pip install -r requirements.txt --disable-pip-version-check -q'
+=======
+        bat '%PYTHON% -m pip install --upgrade pip -q'
+>>>>>>> fd5b7dc7ebbdb8426f04b27b668ef1f833384181
 			bat '''
 				if exist requirements.txt (
 					%PYTHON% -m pip install -r requirements.txt -q

@@ -6,22 +6,29 @@ pipeline {
 
     stages {
         stage('Prep') {
-			steps {
-				bat 'echo PREP STEP OK'
-			}
-		}
-
-        stage('npm install') {
             steps {
-                bat 'npm ci --loglevel=info --no-audit --no-fund'
+                powershell 'Write-Output "PREP STEP OK"; $PSVersionTable.PSVersion'
             }
         }
 
-        stage('Build') {
+        stage('Install deps') {
             steps {
-                bat 'npm run build'
+                powershell '''
+                    & $env:PYTHON -m pip install --upgrade pip
+                    if (Test-Path requirements.txt) {
+                        & $env:PYTHON -m pip install -r requirements.txt
+                    }
+                    npm ci --loglevel=info --no-audit --no-fund
+                '''
+            }
+        }
+
+        stage('Build frontend') {
+            steps {
+                powershell 'npm run build'
             }
         }
     }
+
     options { timeout(time: 15, unit: 'MINUTES') }
 }

@@ -1,75 +1,29 @@
 pipeline {
-    agent any               
-    
+    agent any
     environment {
-        PYTHON = 'py'       // Windows Python launcher
-        NODE_ENV = 'production'
+        PYTHON = 'py'
     }
 
     stages {
-
-        stage('Checkout') {
-            steps { checkout scm }   // a job configban megadott repo + branch
-        }
-
-        stage('Python deps') {
-    steps {
-<<<<<<< HEAD
-        bat '%PYTHON% -m pip install -r requirements.txt --disable-pip-version-check -q'
-=======
-        bat '%PYTHON% -m pip install --upgrade pip -q'
->>>>>>> fd5b7dc7ebbdb8426f04b27b668ef1f833384181
-			bat '''
-				if exist requirements.txt (
-					%PYTHON% -m pip install -r requirements.txt -q
-				) else (
-					echo No requirements.txt found
-				)
-			'''
-		}
-	}
-
-	stage('JS deps') {
-		steps {
-			// --loglevel=info folyamatosan írja a modulokat
-			bat 'npm ci --loglevel=info --no-audit --no-fund'
-		}
-	}
-
-        stage('Build frontend') {
+        stage('Prep') {
             steps {
-                bat 'npm run build'   // Webpack => dist/
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
-                }
+                bat 'where node'
+                bat 'node -v'
+                bat '%PYTHON% --version'
             }
         }
 
-        stage('Run tests') {
+        stage('npm install') {
             steps {
-                bat '%PYTHON% -m pytest -q || echo "nincsenek pytest-ek"'
+                bat 'npm ci --loglevel=info --no-audit --no-fund'
             }
         }
 
-        stage('Package') {
+        stage('Build') {
             steps {
-                bat '''
-                    if exist build rmdir /s /q build
-                    mkdir build
-                    copy server.py build\\
-                    xcopy dist build\\dist\\ /E /I /Y
-                    powershell -command ^
-                      "Compress-Archive -Path build\\* -DestinationPath site.zip"
-                '''
+                bat 'npm run build'
             }
-            post { always { archiveArtifacts artifacts: 'site.zip' } }
         }
     }
-
-    post {
-        success { echo '✅  Build sikeres' }
-        failure { echo '❌  Build elhasalt' }
-    }
+    options { timeout(time: 15, unit: 'MINUTES') }
 }
